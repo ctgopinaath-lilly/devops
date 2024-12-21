@@ -13,8 +13,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set REPO_NAME variable
-      run: echo "REPO_NAME=${{ github.repository }}" >> $GITHUB_ENV  # Set dynamic REPO_NAME as an environment variable
+    # - name: Set REPO_NAME variable
+    #   run: echo "REPO_NAME=${{ github.repository }}" >> $GITHUB_ENV  # Set dynamic REPO_NAME as an environment variable
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ${{ env.REPO_NAME }}:${{ github.sha }}
