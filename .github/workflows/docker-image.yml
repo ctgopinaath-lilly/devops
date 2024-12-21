@@ -32,5 +32,5 @@ jobs:
 
       # Step 5: Push the Docker image to the Docker registry (e.g., DockerHub)
       - name: Push Docker image to registry
-        run: docker push ${{ env.REPO_NAME }}:latest
+        run: docker push ${{ secrets.REPO_NAME }}:latest
 
