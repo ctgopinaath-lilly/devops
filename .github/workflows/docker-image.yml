@@ -7,12 +7,25 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Set REPO_NAME variable
+      run: echo "REPO_NAME=${{ github.repository }}" >> $GITHUB_ENV  # Set dynamic REPO_NAME as an environment variable
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag wednesday5900/gitlab_webserver:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{ env.REPO_NAME }}:${{ github.sha }}
+
+    # New step to log in to Docker registry
+    - name: Log in to Docker registry
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.REPO_USERNAME }}
+        password: ${{ secrets.REPO_PASSWORD }}
+
+    # New step to push the Docker image to the registry
+    - name: Push the Docker image to the registry
+      run: docker push ${{ env.REPO_NAME }}:${{ github.sha }}
