@@ -17,7 +17,7 @@ jobs:
     #   run: echo "REPO_NAME=${{ github.repository }}" >> $GITHUB_ENV  # Set dynamic REPO_NAME as an environment variable
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ env.REPO_NAME }}:${{ github.sha }}
+      run: docker build . --file Dockerfile --tag ${{ env.REPO_NAME }}:latest
 
     # New step to log in to Docker registry
     - name: Log in to Docker registry
@@ -28,4 +28,4 @@ jobs:
 
     # New step to push the Docker image to the registry
     - name: Push the Docker image to the registry
-      run: docker push ${{ env.REPO_NAME }}:${{ github.sha }}
+      run: docker push ${{ env.REPO_NAME }}:latest
